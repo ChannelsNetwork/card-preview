@@ -5,29 +5,93 @@
     <style>
        :host {
         display: block;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+        line-height: 1.5;
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      h1 {
+        font-family: 'Raleway', sans-serif;
+        margin: 0;
+        font-weight: 400;
+        line-height: 1.3;
+        font-size: 32px;
+      }
+
+      header {
+        overflow: hidden;
+        background-color: #f0f0f0;
+        background-size: cover;
+        background-origin: border-box;
+        background-position: 50% 50%;
+        width: 100%;
+        box-sizing: border-box;
+        height: 20vh;
+        min-height: 280px;
+      }
+
+      section {
+        padding: 15px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      section.preview {
+        background: #FFF9C4;
+        font-size: 14px;
+      }
+
+      em {
+        font-style: normal;
+        font-weight: bold;
+        color: #37474F;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <header id="header"></header>
+    <section>
+      <h1>[[data.title]]</h1>
+      <p>[[data.text]]</p>
+    </section>
+    <section class="preview">
+      <p>
+        This is a preview.
+      </p>
+      <p>This is where you will interact with the content in this card.</p>
+      <p>
+        Each card presents its content in the most appropriate way: a <em>video</em>, a <em>photo array</em>, an <em>article</em>,
+        a <em>game</em>, or just about <em>anything you can imagine</em> on the web.
+      </p>
+      <p>
+        For now, your balance is not affected by opening this card. When we go live, you will pay or be paid the price shown on the
+        card when you open it, and your balance will go down or up accordingly.
+      </p>
+    </section>
   </template>
 
   <script>
-    /**
-     * `card-preview`
-     * A sample Channels card for preview purposes
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
     class CardPreview extends Polymer.Element {
       static get is() { return 'card-preview'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'card-preview'
+          data: {
+            type: Object,
+            observer: '_onData'
           }
         };
+      }
+
+      _onData() {
+        if (this.data) {
+          let imgUrl = this.data.imageUrl;
+          if (imgUrl) {
+            this.$.header.style.backgroundImage = "url('" + imgUrl + "'";
+            this.$.header.style.display = "";
+          } else {
+            this.$.header.style.display = "none";
+          }
+        }
       }
     }
 
